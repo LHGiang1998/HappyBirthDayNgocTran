@@ -55,7 +55,7 @@ export default function CardSection({ onOpen }: CardSectionProps) {
           Happy Birthday
         </h1>
         <h2 className="font-serif text-2xl md:text-3xl font-medium text-rose-400 mb-6 drop-shadow-[0_2px_8px_rgba(244,63,94,0.3)]">
-          My Love ❤️
+          My Love Ngọc Trân ❤️
         </h2>
 
         <div className="w-16 h-[1px] bg-gradient-to-r from-transparent via-rose-500/40 to-transparent mb-6" />
