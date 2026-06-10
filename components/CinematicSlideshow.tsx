@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CONFIG } from "@/lib/config";
 import Image from "next/image";
-import { FastForward, Calendar } from "lucide-react";
+import { FastForward } from "lucide-react";
 
 interface MemoryItem {
   file: string;
@@ -103,18 +103,30 @@ export default function CinematicSlideshow({ onComplete }: CinematicSlideshowPro
             {/* Ken Burns Animated Image Wrapper */}
             <motion.div
               initial={{ scale: 1.0 }}
-              animate={{ scale: 1.15 }}
+              animate={{ scale: 1.05 }}
               transition={{ duration: 9.5, ease: "easeOut" }}
-              className="absolute inset-0 w-full h-full"
+              className="absolute inset-0 w-full h-full flex items-center justify-center p-4 md:p-8"
             >
+              {/* Blurred Background Copy to fill screen dynamically without cropping */}
               <Image
                 src={`/images/${currentImage}`}
-                alt={currentMeta.title}
+                alt=""
                 fill
                 priority
                 sizes="100vw"
-                className="object-cover"
+                className="object-cover blur-2xl opacity-35 scale-110 pointer-events-none select-none"
               />
+              {/* Clean Foreground Image fitted neatly within bounds */}
+              <div className="relative w-full h-full max-w-4xl max-h-[70vh] md:max-h-[75vh]">
+                <Image
+                  src={`/images/${currentImage}`}
+                  alt={currentMeta.title}
+                  fill
+                  priority
+                  sizes="(max-width: 1200px) 100vw, 1200px"
+                  className="object-contain"
+                />
+              </div>
             </motion.div>
           </motion.div>
         </AnimatePresence>
@@ -149,11 +161,7 @@ export default function CinematicSlideshow({ onComplete }: CinematicSlideshowPro
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="max-w-2xl px-6 py-4 rounded-xl bg-black/40 backdrop-blur-md border border-white/5"
           >
-            {/* Date Tag */}
-            <div className="flex items-center justify-center gap-1.5 text-xs md:text-sm font-semibold uppercase tracking-widest text-rose-400 mb-2">
-              <Calendar className="w-3.5 h-3.5" />
-              <span>{currentMeta.date}</span>
-            </div>
+            {/* Date Tag Omitted */}
 
             {/* Title */}
             <h3 className="font-serif text-2xl md:text-4xl font-bold text-white mb-2 leading-snug">
