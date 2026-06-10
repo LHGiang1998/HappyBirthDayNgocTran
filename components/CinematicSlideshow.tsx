@@ -150,31 +150,7 @@ export default function CinematicSlideshow({ onComplete }: CinematicSlideshowPro
         </button>
       </div>
 
-      {/* Caption Area (Bottom Center) */}
-      <div className="absolute bottom-16 left-6 right-6 z-20 flex flex-col items-center text-center pb-safe pl-safe pr-safe">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentImage + "-caption"}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -15 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            className="max-w-2xl px-6 py-4 rounded-xl bg-black/40 backdrop-blur-md border border-white/5"
-          >
-            {/* Date Tag Omitted */}
-
-            {/* Title */}
-            <h3 className="font-serif text-2xl md:text-4xl font-bold text-white mb-2 leading-snug">
-              {currentMeta.title}
-            </h3>
-
-            {/* Description */}
-            <p className="font-sans text-sm md:text-base text-rose-100/70 font-light leading-relaxed max-w-lg mx-auto">
-              {currentMeta.description}
-            </p>
-          </motion.div>
-        </AnimatePresence>
-      </div>
+      {/* Caption Area Omitted */}
     </div>
   );
 }
