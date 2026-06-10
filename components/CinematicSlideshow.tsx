@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CONFIG } from "@/lib/config";
 import Image from "next/image";
-import { FastForward } from "lucide-react";
+import { FastForward, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface MemoryItem {
   file: string;
@@ -58,10 +58,24 @@ export default function CinematicSlideshow({ onComplete }: CinematicSlideshowPro
         clearInterval(timer);
         onComplete();
       }
-    }, 9000); // 9 seconds per slide (Ken Burns + crossfade buffer)
+    }, 4500); // 4.5 seconds per slide (50% faster)
 
     return () => clearInterval(timer);
   }, [images, currentIndex, onComplete]);
+
+  const handleNext = () => {
+    if (currentIndex < images.length - 1) {
+      setCurrentIndex((prev) => prev + 1);
+    } else {
+      onComplete();
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex((prev) => prev - 1);
+    }
+  };
 
   if (loading) {
     return (
@@ -97,14 +111,14 @@ export default function CinematicSlideshow({ onComplete }: CinematicSlideshowPro
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ opacity: { duration: 1.5, ease: "easeInOut" } }}
+            transition={{ opacity: { duration: 0.8, ease: "easeInOut" } }}
             className="relative w-full h-full"
           >
             {/* Ken Burns Animated Image Wrapper */}
             <motion.div
               initial={{ scale: 1.0 }}
-              animate={{ scale: 1.05 }}
-              transition={{ duration: 9.5, ease: "easeOut" }}
+              animate={{ scale: 1.04 }}
+              transition={{ duration: 4.8, ease: "easeOut" }}
               className="absolute inset-0 w-full h-full flex items-center justify-center p-4 md:p-8"
             >
               {/* Blurred Background Copy to fill screen dynamically without cropping */}
@@ -131,6 +145,27 @@ export default function CinematicSlideshow({ onComplete }: CinematicSlideshowPro
           </motion.div>
         </AnimatePresence>
       </div>
+
+      {/* Floating Navigation Controls */}
+      {/* Left (Prev) Arrow */}
+      {currentIndex > 0 && (
+        <button
+          onClick={handlePrev}
+          className="absolute left-4 top-1/2 -translate-y-1/2 z-35 w-12 h-12 rounded-full glass-panel flex items-center justify-center text-rose-300 hover:text-white hover:bg-rose-500/20 active:scale-90 transition-all duration-300 shadow-lg cursor-pointer"
+          aria-label="Previous Slide"
+        >
+          <ChevronLeft className="w-6 h-6" />
+        </button>
+      )}
+
+      {/* Right (Next) Arrow */}
+      <button
+        onClick={handleNext}
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-35 w-12 h-12 rounded-full glass-panel flex items-center justify-center text-rose-300 hover:text-white hover:bg-rose-500/20 active:scale-90 transition-all duration-300 shadow-lg cursor-pointer"
+        aria-label="Next Slide"
+      >
+        <ChevronRight className="w-6 h-6" />
+      </button>
 
       {/* Cinematic Overlays */}
       {/* Dark Vignette & Bottom Caption Shade */}
